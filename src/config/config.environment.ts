@@ -6,6 +6,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') })
 const environments = {
   NODE_ENV: process.env.NODE_ENV || 'development',
   PORT: Number(process.env.PORT) || 3000,
+  SESSION_SECRET: process.env.SESSION_SECRET_KEY || '24E1D9EB365FEB13DAF4397A322BF',
   DB_HOST: process.env.DATABASE_HOST || 'localhost',
   DB_PORT: Number(process.env.DATABASE_PORT) || 3306,
   DB_USERNAME: process.env.DATABASE_USERNAME || 'admin',
