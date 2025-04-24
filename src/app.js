@@ -6,6 +6,7 @@ import slowDown from 'express-slow-down';
 import { xss } from 'express-xss-sanitizer';
 import helmet from 'helmet';
 import hpp from 'hpp';
+import { StatusCodes } from 'http-status-codes';
 import nocache from 'nocache';
 import passport from 'passport';
 import path from 'path';
@@ -13,7 +14,9 @@ import zlib from 'zlib';
 
 import environments from './config/environment.config.js';
 import jwtStrategy from './config/passport.config.js';
+import { errorConverter, errorHandler } from './middlewares/error.middleware.js';
 import router from './routes/index.js';
+import ApiError from './utils/ApiError.js';
 
 
 export default function createApp() {
@@ -44,17 +47,20 @@ export default function createApp() {
     app.use(
         rateLimit({
             windowMs: 15 * 60 * 1000,
-            max: 100,
+            max: 20,
             standardHeaders: true,
             legacyHeaders: false,
+            skipSuccessfulRequests: true,
             message: 'To many request, please try again later'
         })
     )
     app.use(
         slowDown({
             windowMs: 15 * 60 * 1000,
-            delayAfter: 50,
-            delayMs: (hits) => hits * 1000,
+            delayAfter: 10,
+            delayMs: () => 500,
+            maxDelayMs: 2000,
+            skipSuccessfulRequests: true
         })
     )
 
@@ -62,28 +68,12 @@ export default function createApp() {
     passport.use('jwt', jwtStrategy)
     
     app.use('/api/v1', router);
-    
-    app.get('/', (req, res) => {
-        res.send('Hello World');
-    });
+    app.use((req, res, next) => {
+        next(new ApiError(StatusCodes.NOT_FOUND, 'Not found'));
+    })
+
+    app.use(errorConverter)
+    app.use(errorHandler)
     
     return app
 }
-
-
-
-//   private async middleware() {
-//     this.app.use(
-//       session({
-//         resave: false,
-//         saveUninitialized: false,
-//         secret: environments.SESSION_SECRET,
-//         cookie: { httpOnly: true }
-//       })
-//     )
-//   }
-
-//   private async route() {
-//     this.app.use(`${this.version}/auth`)
-//   }
-// }

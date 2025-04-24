@@ -4,7 +4,7 @@ import path from 'path';
 const __dirname = path.resolve(process.cwd());
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-export default {
+const environments = {
   env: process.env.NODE_ENV || 'development',
   port: process.env.PORT || 3000,
   dirname: __dirname,
@@ -23,3 +23,6 @@ export default {
     }
   }
 };
+
+
+export default environments;
