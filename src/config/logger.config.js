@@ -2,14 +2,7 @@ import winston from 'winston';
 import environments from './environment.config.js';
 
 
-const { combine, timestamp, json } = winston.format;
-const enumerateErrorFormat = winston.format((info) => {
-    if (info instanceof Error) {
-      Object.assign(info, { message: info.stack });
-    }
-    return info;
-  });
-  
+const { combine, timestamp, json, errors } = winston.format;
 
 const transports = [
     new winston.transports.File({ filename: 'logs/error.log', level: 'error' }),
@@ -25,7 +18,7 @@ if (environments.env === 'development') {
 const logger = winston.createLogger({
     level: 'info',
     format: combine(
-        enumerateErrorFormat(),
+        errors({stack: true}),
         timestamp({
             format: 'YYYY-MM-DD hh:mm:ss.SSS A',
         }),

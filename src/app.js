@@ -1,8 +1,6 @@
 import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
-import rateLimit from 'express-rate-limit';
-import slowDown from 'express-slow-down';
 import { xss } from 'express-xss-sanitizer';
 import helmet from 'helmet';
 import hpp from 'hpp';
@@ -15,6 +13,7 @@ import zlib from 'zlib';
 import environments from './config/environment.config.js';
 import jwtStrategy from './config/passport.config.js';
 import { errorConverter, errorHandler } from './middlewares/error.middleware.js';
+import { rateLimiter, speedLimiter } from './middlewares/limiter.middleware.js';
 import router from './routes/index.js';
 import ApiError from './utils/ApiError.js';
 
@@ -44,25 +43,8 @@ export default function createApp() {
             memLevel: zlib.constants.Z_BEST_COMPRESSION
         })
     )
-    app.use(
-        rateLimit({
-            windowMs: 15 * 60 * 1000,
-            max: 20,
-            standardHeaders: true,
-            legacyHeaders: false,
-            skipSuccessfulRequests: true,
-            message: 'To many request, please try again later'
-        })
-    )
-    app.use(
-        slowDown({
-            windowMs: 15 * 60 * 1000,
-            delayAfter: 10,
-            delayMs: () => 500,
-            maxDelayMs: 2000,
-            skipSuccessfulRequests: true
-        })
-    )
+    app.use(rateLimiter())
+    app.use(speedLimiter())
 
     app.use(passport.initialize())
     passport.use('jwt', jwtStrategy)
