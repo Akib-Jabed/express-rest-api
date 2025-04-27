@@ -8,9 +8,9 @@ const environments = {
   env: process.env.NODE_ENV || 'development',
   port: process.env.PORT || 3000,
   dirname: __dirname,
-  secret: {
-    session: process.env.SESSION_SECRET_KEY || '24E1D9EB365FEB13DAF4397A322BF',
-    jwt: process.env.JWT_SECRET_KEY || '24E1D9EB365FEB13DAF4397A322BF'
+  jwt: {
+    secret: process.env.JWT_SECRET_KEY || '24E1D9EB365FEB13DAF4397A322BF',
+    expiresIn: process.env.JWT_EXPIRES_IN || '1d'
   },
   database: {
     client: process.env.DATABASE_CLIENT || 'mysql',

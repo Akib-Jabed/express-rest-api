@@ -255,6 +255,13 @@ const HrEmployee = new EntitySchema({
       nullable: true,
     },
   },
+  relations: {
+    hrOrganizationSetup: {
+      type: "one-to-one",
+      target: 'HrOrganizationSetup',
+      inverseSide: "hrEmployee"
+    }
+  }
 });
 
 export default HrEmployee;

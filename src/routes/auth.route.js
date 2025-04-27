@@ -7,8 +7,7 @@ import { registerSchema } from '../schemas/auth.schema.js';
 const router = express.Router();
 
 router.post('/register', validate(registerSchema), register)
-// router.post('/login')
-// router.post('/logout')
+
 
 
 export default router;

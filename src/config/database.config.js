@@ -1,9 +1,9 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
-import environment from './environment.config.js'
+import environments from './environment.config.js'
 
-const { database } = environment
+const { database } = environments
 const { client } = database
 
 const entityPath = 'src/entities/*.js'
@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
   database: database[client].database || 'test',
   entities: [entityPath],
   synchronize: false,
-  logging: false
+  logging: environments.env === 'development'
 })
 
 export default AppDataSource
