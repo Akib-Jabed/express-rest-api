@@ -6,10 +6,11 @@ import ApiError from "../utils/ApiError.js";
 const validate = (schema = {}) => (req, res, next) => {
     const sources = ['body', 'params', 'query'];
     const errors = [];
-
+    
     for (const source of sources) {
-        if (schema[source]) {
-            const { error, value } = schema[source].validate(req[source], {abortEarly: false, stripUnknown: true })
+        if (schema[source]) {            
+            const data = req[source] || {};
+            const { error, value } = schema[source].validate(data, {abortEarly: false, stripUnknown: true })
 
             if (error) {
                 error.details.forEach(detail => {
@@ -24,10 +25,9 @@ const validate = (schema = {}) => (req, res, next) => {
         }
     }
 
-    console.log(errors);
-
     if (errors.length > 0) {
-        return next(new ApiError(StatusCodes.BAD_REQUEST, 'Validation failed'))
+        const message = errors.map(({message}) => message.replaceAll('"', '')).join(', ');
+        return next(new ApiError(StatusCodes.BAD_REQUEST, message));
     }
 
     next()
