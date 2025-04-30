@@ -17,6 +17,6 @@ export const loginSchema = {
             Joi.string().email(),
             Joi.string().pattern(/^\d{9}$/)
         ).required(),
-        password: Joi.string().min(6).required()
+        password: Joi.string().required()
     })
 }

@@ -12,16 +12,23 @@ const options = {
     passReqToCallback: true
 } 
 
-const verify = async (payload, done) => {
+const verify = async (req, payload, done) => {
     try {
-        const employeeRepo = AppDataSource.getRepository(HrEmployee)
-        const employee = await employeeRepo.findOneBy({employee_id: payload.employeeId})
+        const employeeRepo = AppDataSource.getRepository(HrEmployee);
+        const employee = await employeeRepo.findOne({
+            where: {
+                employee_id: payload.employeeId,
+                publication_status: 'activated'
+            },
+            select: ['employee_id']
+        });
 
         if (employee) {
-            req.employee = employee;
+            req.employeeId = employee.employee_id;
             return done(null, employee);
         }
-        done(null, false);
+        
+        done(null, false, {message: 'Invalid token'});
     } catch (err) {
         done(err, false)
     }

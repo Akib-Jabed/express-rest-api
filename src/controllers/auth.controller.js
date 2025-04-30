@@ -1,8 +1,16 @@
-import { registerEmployee } from "../services/auth.service.js";
+import { StatusCodes } from 'http-status-codes';
+
+import { loginService, registerService } from "../services/auth.service.js";
 import catchAsync from "../utils/catchAsync.js";
 
-export const register = catchAsync(async (req, res) => {
-    const token = await registerEmployee(req.body);
+export const registerController = catchAsync(async (req, res) => {
+    const token = await registerService(req.Body);
     
-    return res.status(200).send({success: true, message: 'Employee registered successfully', token})    
+    return res.status(StatusCodes.OK).send({success: true, message: 'Employee registered successfully', token})    
+})
+
+export const loginController = catchAsync(async (req, res) => {
+    const token = await loginService(req.Body);
+
+    return res.status(StatusCodes.OK).send({success: true, message: 'Employee login successful', token})   
 })

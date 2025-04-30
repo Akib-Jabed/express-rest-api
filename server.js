@@ -2,7 +2,7 @@ import gracefulShutdown from 'http-graceful-shutdown';
 
 import createApp from './src/app.js';
 import AppDataSource from './src/config/database.config.js';
-import environment from './src/config/environment.config.js';
+import environments from './src/config/environment.config.js';
 import logger from './src/config/logger.config.js';
 
 
@@ -13,7 +13,7 @@ async function startApp() {
         await AppDataSource.initialize()
         logger.info('✅ Data source has been initialized!');
         
-        const server = app.listen(environment.port, () => logger.info(`🚀 Server running at port: ${environment.port}`));
+        const server = app.listen(environments.port, () => logger.info(`🚀 Server running at port: ${environments.port}`));
 
         gracefulShutdown(server, {
             development: false,

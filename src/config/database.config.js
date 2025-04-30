@@ -17,7 +17,7 @@ const AppDataSource = new DataSource({
   database: database[client].database || 'test',
   entities: [entityPath],
   synchronize: false,
-  logging: environments.env === 'development'
+  logging: environments.env !== 'development'
 })
 
 export default AppDataSource

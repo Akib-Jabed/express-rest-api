@@ -1,42 +1,22 @@
-import { In } from 'typeorm';
+import { StatusCodes } from 'http-status-codes';
+
 import AppDataSource from '../config/database.config.js';
 import HrEmployee from '../entities/hr_employee.entity.js';
 import HrOrganizationSetup from '../entities/hr_organization_setup.entity.js';
+import { isActiveEmployee } from '../helpers/query.js';
 import ApiError from '../utils/ApiError.js';
-import { generateToken, hashPassword } from '../utils/auth.js';
+import { generateToken, hashPassword, verifyPassword } from '../utils/auth.js';
 
-export const registerEmployee = async ({username, password}) => {
+export const registerService = async ({username, password}) => {
   const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
   
-  const employee = await hrEmployeeRepo.findOne({
-    select: {
-      employee_id: true, 
-      hrOrganizationSetup: { 
-        portal_access: true
-      }
-    },
-    where: [
-      {
-        publication_status: 'activated',
-        employee_custom_id: username
-      },
-      {
-        publication_status: 'activated',
-        hrOrganizationSetup: {
-          off_email: username,
-          publication_status: 'activated',
-          working_status: In(['Working', 'JV'])
-        }
-      }
-    ],
-    relations: ['hrOrganizationSetup']
-  });
+  const employee = await isActiveEmployee(username);
   
   if (!employee) {
-    throw new ApiError(400, 'Employee not found');
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Employee not found');
   }
-  if (employee.hrOrganizationSetup.portal_access === 'Yes') {
-    throw new ApiError(400, 'Employee already registered');
+  if (employee.organizationSetup.portal_access === 'Yes') {
+    throw new ApiError(StatusCodes.CONFLICT, 'Employee already registered');
   }
   
   await AppDataSource.transaction(async transactionManager => {
@@ -51,4 +31,22 @@ export const registerEmployee = async ({username, password}) => {
   
   const token = generateToken({employeeId: employee.employee_id});
   return token;
+}
+
+export const loginService = async ({username, password}) => {
+  const employee = await isActiveEmployee(username);
+  
+  if (!employee) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'Employee not found');
+  }  
+  if (employee.organizationSetup.portal_access === 'No') {
+    throw new ApiError(StatusCodes.FORBIDDEN, "Employee don't have portal access");
+  }
+
+  if (await verifyPassword(password, employee.password)) {
+    const token = generateToken({employeeId: employee.employee_id});
+    return token;
+  }
+
+  throw new ApiError(StatusCodes.UNAUTHORIZED, 'Invalid credentials');
 }

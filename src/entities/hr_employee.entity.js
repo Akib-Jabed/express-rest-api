@@ -256,9 +256,13 @@ const HrEmployee = new EntitySchema({
     },
   },
   relations: {
-    hrOrganizationSetup: {
+    organizationSetup: {
       type: "one-to-one",
       target: 'HrOrganizationSetup',
+      joinColumn: {
+        name: "employee_id",
+        referencedColumnName: 'employee_id'
+      },
       inverseSide: "hrEmployee"
     }
   }

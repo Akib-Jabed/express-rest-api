@@ -256,13 +256,27 @@ const HrOrganizationSetup = new EntitySchema({
   },
   relations: {
     hrEmployee: {
-        type: "one-to-one",
-        target: "HrEmployee",
-        joinColumn: {
-            name: "employee_id",
-            referencedColumnName: 'employee_id'
-        },
-        inverseSide: 'hrOrganizationSetup'
+      type: "one-to-one",
+      target: "HrEmployee",
+      inverseSide: 'organizationSetup'
+    },
+    designationMaster: {
+      type: "one-to-one",
+      target: 'HrDesignationMaster',
+      joinColumn: {
+        name: "employee_desig_id",
+        referencedColumnName: 'designation_id'
+      },
+      inverseSide: "organizationSetup"
+    },
+    departments: {
+      type: "one-to-one",
+      target: 'HrDepartments',
+      joinColumn: {
+        name: "id_department",
+        referencedColumnName: 'id_department'
+      },
+      inverseSide: "organizationSetup"
     }
   }
 });
