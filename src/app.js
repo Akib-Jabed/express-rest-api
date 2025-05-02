@@ -48,6 +48,10 @@ export default function createApp() {
 
     app.use(passport.initialize())
     passport.use('jwt', jwtStrategy)
+
+    // app.get('/', (req, res) => {
+    //     res.send('Hello World!!');
+    // })
     
     app.use('/api/v1', router);
     app.use((req, res, next) => {

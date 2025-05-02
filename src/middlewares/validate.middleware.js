@@ -8,7 +8,7 @@ const validate = (schema = {}) => (req, res, next) => {
     const validationSources = [
         { source: 'body', data: req.body },
         { source: 'query', data: req.query },
-        { source: 'params', data: req.params }
+        { source: 'params', data: req.params },
     ];
     
     validationSources.flatMap(({source, data}) => {
