@@ -11,6 +11,7 @@ import path from 'path';
 import zlib from 'zlib';
 
 import environments from './config/environment.config.js';
+import { successHandler } from './config/morgan.config.js';
 import jwtStrategy from './config/passport.config.js';
 import { errorConverter, errorHandler } from './middlewares/error.middleware.js';
 import { rateLimiter, speedLimiter } from './middlewares/limiter.middleware.js';
@@ -20,6 +21,9 @@ import ApiError from './utils/ApiError.js';
 
 export default function createApp() {
     const app = express();
+
+    app.use(successHandler);
+    app.use(errorHandler);
 
     app.use(express.json({ limit: '3mb' }));
     app.use(express.urlencoded({ extended: true }));
