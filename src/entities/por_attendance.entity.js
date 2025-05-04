@@ -69,16 +69,16 @@ const PorAttendance = new EntitySchema({
       default: 'Web'
     }
   },
-  relations: {
-    hr_employee: {
-      type: 'one-to-one',
-      target: 'HrEmployee',
-      joinColumn: {
-        name: 'employee_id',
-        referencedColumnName: 'employee_id'
-      }
-    }
-  }
+  // relations: {
+  //   hr_employee: {
+  //     type: 'one-to-one',
+  //     target: 'HrEmployee',
+  //     joinColumn: {
+  //       name: 'employee_id',
+  //       referencedColumnName: 'employee_id'
+  //     }
+  //   }
+  // }
 });
 
 export default PorAttendance;

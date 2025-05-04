@@ -1,8 +1,48 @@
+import { In } from 'typeorm';
+
+import AppDataSource from '../config/database.config.js';
+import HrEmployee from '../entities/hr_employee.entity.js';
 import { createFlattenOject } from '../helpers/formatter.js';
-import { employeeInformation } from '../helpers/query.js';
+
+const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
 
 export const informationService = async employeeId => {
-    const information = await employeeInformation(employeeId);
+    const information = await hrEmployeeRepo.findOne({
+        select: {
+          employeeId: true, 
+          employeeCustomId: true,
+          firstName: true,
+          lastName: true,
+          fullName: true,
+          avatar: true,
+          organizationSetup: { 
+            employeeId: true,
+            offEmail: true,
+            employeeDesigId: true,
+            idDepartment: true,
+            designationMaster: {
+              designationTitle: true
+            },
+            departments: {
+              department: true
+            }
+          }
+        },
+        where: {
+          publicationStatus: 'activated',
+          employeeId: employeeId,
+          organizationSetup: {
+            publicationStatus: 'activated',
+            workingStatus: In(['Working', 'JV'])
+          }
+        },
+        relations: { 
+          organizationSetup: {
+            designationMaster: true,
+            departments: true
+          }
+        }
+      });
 
     const obj = {
         personal: {

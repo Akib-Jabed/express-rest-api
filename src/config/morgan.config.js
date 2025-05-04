@@ -14,12 +14,12 @@ const stream = (level) => ({
     write: (message) => logger[level](message.trim())
 });
 
-export const successHandler = morgan(successResponse, {
+export const successHandler = morgan(logFormat, {
     skip: (req, res) => res.statusCode >= 400,
     stream: stream('info')
 }); 
 
-export const errorHandler = morgan(errorResponse, {
+export const errorHandler = morgan(errorFormat, {
     skip: (req, res) => res.statusCode < 400,
     stream: stream('error')
 });

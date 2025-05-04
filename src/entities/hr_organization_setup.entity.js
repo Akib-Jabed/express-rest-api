@@ -317,14 +317,18 @@ const HrOrganizationSetup = new EntitySchema({
     hrEmployee: {
       type: "one-to-one",
       target: "HrEmployee",
-      inverseSide: 'organizationSetup'
+      inverseSide: 'organizationSetup',
+      joinColumn: {
+        name: 'employee_id',
+        referencedColumnName: 'employeeId'
+      }
     },
     designationMaster: {
       type: "one-to-one",
       target: 'HrDesignationMaster',
       joinColumn: {
         name: "employee_desig_id",
-        referencedColumnName: 'designation_id'
+        referencedColumnName: 'designationId'
       },
       inverseSide: "organizationSetup"
     },
@@ -333,7 +337,7 @@ const HrOrganizationSetup = new EntitySchema({
       target: 'HrDepartments',
       joinColumn: {
         name: "id_department",
-        referencedColumnName: 'id_department'
+        referencedColumnName: 'idDepartment'
       },
       inverseSide: "organizationSetup"
     }

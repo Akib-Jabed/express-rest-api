@@ -17,14 +17,14 @@ const verify = async (req, payload, done) => {
         const employeeRepo = AppDataSource.getRepository(HrEmployee);
         const employee = await employeeRepo.findOne({
             where: {
-                employee_id: payload.employeeId,
-                publication_status: 'activated'
+                employeeId: payload.employeeId,
+                publicationStatus: 'activated'
             },
-            select: ['employee_id']
+            select: ['employeeId']
         });
 
         if (employee) {
-            req.employeeId = employee.employee_id;
+            req.employeeId = employee.employeeId;
             return done(null, employee);
         }
         
