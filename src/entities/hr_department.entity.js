@@ -4,37 +4,44 @@ const HrDepartments = new EntitySchema({
     name: 'HrDepartments',
     tableName: 'hr_departments',
     columns: {
-        id_department: {
+        idDepartment: {
             primary: true,
             type: 'int',
             generated: true,
+            name: 'id_department'
         },
         department: {
             type: 'varchar',
             length: 200,
             nullable: false,
+            name: 'department'
         },
         description: {
             type: 'text',
             nullable: true,
+            name: 'description'
         },
-        id_user: {
+        idUser: {
             type: 'int',
             nullable: true,
+            name: 'id_user'
         },
-        create_date: {
+        createDate: {
             type: 'timestamp',
-            default: () => 'CURRENT_TIMESTAMP'
+            default: () => 'CURRENT_TIMESTAMP',
+            name: 'create_date'
         },
-        publication_status: {
+        publicationStatus: {
             type: 'enum',
             enum: ['activated', 'deactivated'],
-            default: 'activated'
+            default: 'activated',
+            name: 'publication_status'
         },
-        update_date: {
+        updateDate: {
             type: 'timestamp',
             onUpdate: 'CURRENT_TIMESTAMP',
-            nullable: true
+            nullable: true,
+            name: 'update_date'
         }
     },
     relations: {
@@ -45,6 +52,5 @@ const HrDepartments = new EntitySchema({
         }
     },
 });
-
 
 export default HrDepartments;

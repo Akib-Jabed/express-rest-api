@@ -4,42 +4,50 @@ const HrDesignationMaster = new EntitySchema({
     name: 'HrDesignationMaster',
     tableName: 'hr_designation_master',
     columns: {
-        designation_id: {
+        designationId: {
             primary: true,
             type: 'int',
             generated: true,
+            name: 'designation_id'
         },
-        designation_title: {
+        designationTitle: {
             type: 'varchar',
             length: 100,
             nullable: false,
+            name: 'designation_title'
         },
-        short_form: {
+        shortForm: {
             type: 'varchar',
             length: 100,
             nullable: false,
+            name: 'short_form'
         },
         description: {
             type: 'text',
             nullable: false,
+            name: 'description'
         },
-        publication_status: {
+        publicationStatus: {
             type: 'enum',
             enum: ['activated', 'deactivated'],
-            default: 'activated'
+            default: 'activated',
+            name: 'publication_status'
         },
-        date_created: {
+        dateCreated: {
             type: 'timestamp',
-            default: () => 'CURRENT_TIMESTAMP'
+            default: () => 'CURRENT_TIMESTAMP',
+            name: 'date_created'
         },
-        date_updated: {
+        dateUpdated: {
             type: 'timestamp',
             onUpdate: 'CURRENT_TIMESTAMP',
-            nullable: true
+            nullable: true,
+            name: 'date_updated'
         },
-        id_users: {
+        idUsers: {
             type: 'int',
-            nullable: false
+            nullable: false,
+            name: 'id_users'
         }
     },
     relations: {

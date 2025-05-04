@@ -1,257 +1,316 @@
 import { EntitySchema } from 'typeorm';
 
-
 const HrOrganizationSetup = new EntitySchema({
   name: 'HrOrganizationSetup',
   tableName: 'hr_organization_setup',
   columns: {
-    organization_setup_id: {
+    organizationSetupId: {
       type: Number,
       primary: true,
       generated: true,
+      name: 'organization_setup_id'
     },
-    employee_id: {
+    employeeId: {
       type: Number,
+      name: 'employee_id'
     },
-    reporting_supervisor_id: {
-      type: Number,
-      nullable: true,
-    },
-    dept_head_id: {
+    reportingSupervisorId: {
       type: Number,
       nullable: true,
+      name: 'reporting_supervisor_id'
     },
-    company_setup_id: {
-      type: Number,
-    },
-    id_business_unit: {
-      type: Number,
-    },
-    employee_desig_id: {
-      type: Number,
-    },
-    id_department: {
-      type: Number,
-    },
-    id_grade: {
+    deptHeadId: {
       type: Number,
       nullable: true,
+      name: 'dept_head_id'
     },
-    joining_date: {
+    companySetupId: {
+      type: Number,
+      name: 'company_setup_id'
+    },
+    idBusinessUnit: {
+      type: Number,
+      name: 'id_business_unit'
+    },
+    employeeDesigId: {
+      type: Number,
+      name: 'employee_desig_id'
+    },
+    idDepartment: {
+      type: Number,
+      name: 'id_department'
+    },
+    idGrade: {
+      type: Number,
+      nullable: true,
+      name: 'id_grade'
+    },
+    joiningDate: {
       type: 'date',
+      name: 'joining_date'
     },
-    effective_date: {
+    effectiveDate: {
       type: 'date',
+      name: 'effective_date'
     },
-    actual_joining_date: {
+    actualJoiningDate: {
       type: 'date',
       nullable: true,
+      name: 'actual_joining_date'
     },
-    work_station_id: {
+    workStationId: {
       type: Number,
+      name: 'work_station_id'
     },
-    id_employee_nature_type: {
+    idEmployeeNatureType: {
       type: Number,
+      name: 'id_employee_nature_type'
     },
-    shift_id: {
-      type: Number,
-      nullable: true,
-    },
-    line_supervisor_id: {
-      type: Number,
-      nullable: true,
-    },
-    line_supervisor_desig_id: {
+    shiftId: {
       type: Number,
       nullable: true,
+      name: 'shift_id'
     },
-    reporting_supervisor_desig_id: {
+    lineSupervisorId: {
       type: Number,
       nullable: true,
+      name: 'line_supervisor_id'
     },
-    off_number: {
+    lineSupervisorDesigId: {
+      type: Number,
+      nullable: true,
+      name: 'line_supervisor_desig_id'
+    },
+    reportingSupervisorDesigId: {
+      type: Number,
+      nullable: true,
+      name: 'reporting_supervisor_desig_id'
+    },
+    offNumber: {
       type: String,
       length: 50,
       nullable: true,
+      name: 'off_number'
     },
-    off_email: {
+    offEmail: {
       type: String,
       length: 80,
       nullable: true,
+      name: 'off_email'
     },
-    bank_id: {
+    bankId: {
       type: Number,
       nullable: true,
+      name: 'bank_id'
     },
-    branch_id: {
+    branchId: {
       type: Number,
       nullable: true,
+      name: 'branch_id'
     },
-    bank_routing_number: {
+    bankRoutingNumber: {
       type: String,
       length: 30,
       nullable: true,
+      name: 'bank_routing_number'
     },
-    equivalent_designation_id: {
+    equivalentDesignationId: {
       type: Number,
       nullable: true,
+      name: 'equivalent_designation_id'
     },
-    off_acc_num: {
+    offAccNum: {
       type: String,
       length: 80,
       nullable: true,
       default: () => "'NULL'",
+      name: 'off_acc_num'
     },
-    working_status: {
+    workingStatus: {
       type: 'enum',
       enum: ['Working', 'Resigned', 'Retired', 'Terminated', 'Dismissal', 'JV', 'LWI', 'Discharged', 'Salary Hold', 'Long Leave'],
+      name: 'working_status'
     },
-    management_type: {
+    managementType: {
       type: 'enum',
       enum: ['Non Management', 'Management', 'MAX Worker'],
+      name: 'management_type'
     },
-    skill_status: {
+    skillStatus: {
       type: String,
       length: 100,
       nullable: true,
+      name: 'skill_status'
     },
-    skill_confirmed_by: {
+    skillConfirmedBy: {
       type: Number,
       nullable: true,
+      name: 'skill_confirmed_by'
     },
-    publication_status: {
+    publicationStatus: {
       type: 'enum',
       enum: ['activated', 'deactivated'],
       default: 'activated',
+      name: 'publication_status'
     },
-    date_created: {
+    dateCreated: {
       type: 'timestamp',
       default: () => 'CURRENT_TIMESTAMP',
+      name: 'date_created'
     },
-    date_updated: {
+    dateUpdated: {
       type: 'timestamp',
       nullable: true,
       onUpdate: 'CURRENT_TIMESTAMP',
+      name: 'date_updated'
     },
-    id_users: {
+    idUsers: {
       type: Number,
+      name: 'id_users'
     },
-    id_hr_employee_cost_center_setup: {
+    idHrEmployeeCostCenterSetup: {
       type: Number,
       nullable: true,
+      name: 'id_hr_employee_cost_center_setup'
     },
-    portal_access: {
+    portalAccess: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'portal_access'
     },
-    resign_date: {
+    resignDate: {
       type: 'date',
       nullable: true,
+      name: 'resign_date'
     },
-    resign_submission_date: {
+    resignSubmissionDate: {
       type: 'date',
       nullable: true,
+      name: 'resign_submission_date'
     },
-    mobile_banking_number: {
+    mobileBankingNumber: {
       type: String,
       length: 45,
       nullable: true,
+      name: 'mobile_banking_number'
     },
-    time_period: {
+    timePeriod: {
       type: Number,
       nullable: true,
+      name: 'time_period'
     },
-    mobile_banking_type_id: {
+    mobileBankingTypeId: {
       type: Number,
       nullable: true,
+      name: 'mobile_banking_type_id'
     },
-    id_hr_organization_setup_file_import: {
+    idHrOrganizationSetupFileImport: {
       type: Number,
       nullable: true,
+      name: 'id_hr_organization_setup_file_import'
     },
-    id_hr_organization_setup_file_import_update: {
+    idHrOrganizationSetupFileImportUpdate: {
       type: Number,
       nullable: true,
+      name: 'id_hr_organization_setup_file_import_update'
     },
-    salary_hold_reason: {
+    salaryHoldReason: {
       type: 'text',
       nullable: true,
+      name: 'salary_hold_reason'
     },
-    overhead_status: {
+    overheadStatus: {
       type: 'enum',
       enum: ['Yes', 'No'],
       nullable: true,
+      name: 'overhead_status'
     },
-    separation_payable_days: {
+    separationPayableDays: {
       type: 'double',
       precision: 12,
       scale: 2,
       nullable: true,
+      name: 'separation_payable_days'
     },
     remark: {
       type: 'text',
       nullable: true,
+      name: 'remark'
     },
-    manual_attendance: {
+    manualAttendance: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'manual_attendance'
     },
-    id_hr_leave_policy_template: {
+    idHrLeavePolicyTemplate: {
       type: Number,
+      name: 'id_hr_leave_policy_template'
     },
-    id_sub_function: {
+    idSubFunction: {
       type: Number,
       nullable: true,
+      name: 'id_sub_function'
     },
-    id_hr_profession_type: {
+    idHrProfessionType: {
       type: Number,
+      name: 'id_hr_profession_type'
     },
-    work_scope: {
+    workScope: {
       type: 'text',
       nullable: true,
+      name: 'work_scope'
     },
-    mobile_balance_limit: {
+    mobileBalanceLimit: {
       type: 'double',
       precision: 12,
       scale: 2,
+      name: 'mobile_balance_limit'
     },
-    is_roaster_shifting: {
+    isRoasterShifting: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'is_roaster_shifting'
     },
-    late_deduction_type: {
+    lateDeductionType: {
       type: 'enum',
       enum: ['General', 'Special', 'Eight Hours'],
       default: 'General',
+      name: 'late_deduction_type'
     },
-    id_bonus_cost_center_setup: {
+    idBonusCostCenterSetup: {
       type: Number,
       nullable: true,
+      name: 'id_bonus_cost_center_setup'
     },
-    is_continue_service: {
+    isContinueService: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'is_continue_service'
     },
-    works_for_bu_id: {
+    worksForBuId: {
       type: Number,
       nullable: true,
+      name: 'works_for_bu_id'
     },
-    por_pay_strc_show: {
+    porPayStrcShow: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'por_pay_strc_show'
     },
-    manual_tax_calculation: {
+    manualTaxCalculation: {
       type: 'enum',
       enum: ['Yes', 'No'],
       default: 'No',
+      name: 'manual_tax_calculation'
     },
-    hr_absent_template_id: {
+    hrAbsentTemplateId: {
       type: Number,
+      name: 'hr_absent_template_id'
     },
   },
   relations: {

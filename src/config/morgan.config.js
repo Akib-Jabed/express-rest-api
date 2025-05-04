@@ -6,16 +6,20 @@ import logger from './logger.config.js';
 morgan.token('message', (req, res) => res.locals.errorMessage || '');
 
 const { env } = environments;
-const getIpFormat = () => env === 'production' ? ':remote-addr - ' : '';
+const ipFormat = env === 'production' ? ':remote-addr - ' : '';
+const logFormat = `${ipFormat}:method :url :status - :response-time ms`;
+const errorFormat = `${logFormat} - message: :message`;
 
-const successResponse = `${getIpFormat()}:method :url :status - :response-time ms`;
+const stream = (level) => ({
+    write: (message) => logger[level](message.trim())
+});
+
 export const successHandler = morgan(successResponse, {
     skip: (req, res) => res.statusCode >= 400,
-    stream: {write: (message) => logger.info(message.trim())}
-}) 
+    stream: stream('info')
+}); 
 
-const errorResponse = `${getIpFormat()}:method :url :status - :response-time ms - message: :message`;
 export const errorHandler = morgan(errorResponse, {
     skip: (req, res) => res.statusCode < 400,
-    stream: {write: (message) => logger.error(message.trim())}
-})
+    stream: stream('error')
+});

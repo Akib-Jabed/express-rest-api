@@ -12,18 +12,22 @@ const PorAttendance = new EntitySchema({
     },
     employeeId: {
       name: 'employee_id',
-      type: 'int'
+      type: 'int',
+      nullable: false
     },
     date: {
-      type: 'date'
+      type: 'date',
+      nullable: false
     },
     inTime: {
       name: 'in_time',
-      type: 'time'
+      type: 'time',
+      nullable: false
     },
     outTime: {
       name: 'out_time',
-      type: 'time'
+      type: 'time',
+      nullable: false
     },
     type: {
       type: 'enum',
@@ -36,17 +40,18 @@ const PorAttendance = new EntitySchema({
       default: 'pending'
     },
     reason: {
-      type: 'text'
+      type: 'text',
+      nullable: false
     },
     dateCreated: {
       name: 'date_created',
       type: 'timestamp',
-      createDate: true,
+      default: () => 'CURRENT_TIMESTAMP',
     },
     dateUpdated: {
       name: 'date_updated',
       type: 'timestamp',
-      updateDate: true,
+      onUpdate: 'CURRENT_TIMESTAMP',
       nullable: true,
     },
     expendedTime: {

@@ -4,255 +4,311 @@ const HrEmployee = new EntitySchema({
   name: 'HrEmployee',
   tableName: 'hr_employee',
   columns: {
-    employee_id: {
+    employeeId: {
       type: 'int',
       primary: true,
       generated: 'increment',
       unsigned: true,
       name: 'employee_id',
     },
-    employee_custom_id: {
+    employeeCustomId: {
       type: 'varchar',
       length: 255,
+      name: 'employee_custom_id',
     },
-    employee_legacy_id: {
+    employeeLegacyId: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'employee_legacy_id',
     },
-    temp_id_projects: {
+    tempIdProjects: {
       type: 'int',
       nullable: true,
+      name: 'temp_id_projects',
     },
-    first_name: {
+    firstName: {
       type: 'varchar',
       length: 255,
+      name: 'first_name',
     },
-    middle_name: {
+    middleName: {
       type: 'varchar',
       length: 255,
+      name: 'middle_name',
     },
-    last_name: {
+    lastName: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'last_name',
     },
-    phone_number: {
+    phoneNumber: {
       type: 'varchar',
       length: 255,
+      name: 'phone_number',
     },
     gender: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'gender',
     },
-    marital_status: {
+    maritalStatus: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'marital_status',
     },
-    father_name: {
+    fatherName: {
       type: 'varchar',
       length: 255,
+      name: 'father_name',
     },
-    mother_name: {
+    motherName: {
       type: 'varchar',
       length: 255,
+      name: 'mother_name',
     },
-    present_address: {
+    presentAddress: {
       type: 'text',
+      name: 'present_address',
     },
-    permanant_address: {
+    permanantAddress: {
       type: 'text',
+      name: 'permanant_address',
     },
     email: {
       type: 'varchar',
       length: 255,
+      name: 'email',
     },
     nid: {
       type: 'varchar',
       length: 255,
+      name: 'nid',
     },
-    blood_group: {
+    bloodGroup: {
       type: 'varchar',
       length: 10,
       nullable: true,
+      name: 'blood_group',
     },
     religion: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'religion',
     },
     avatar: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'avatar',
     },
     dob: {
       type: 'date',
       nullable: true,
+      name: 'dob',
     },
-    publication_status: {
+    publicationStatus: {
       type: 'enum',
       enum: ['activated', 'deactivated'],
       default: 'activated',
       nullable: true,
+      name: 'publication_status',
     },
-    date_created: {
+    dateCreated: {
       type: 'timestamp',
-      createDate: true,
-      nullable: true,
+      default: () => 'CURRENT_TIMESTAMP',
+      name: 'date_created',
     },
-    date_updated: {
+    dateUpdated: {
       type: 'timestamp',
-      updateDate: true,
+      onUpdate: 'CURRENT_TIMESTAMP',
       nullable: true,
+      name: 'date_updated',
     },
-    id_users: {
+    idUsers: {
       type: 'int',
       nullable: true,
+      name: 'id_users',
     },
-    telephone_number: {
+    telephoneNumber: {
       type: 'varchar',
       length: 255,
+      name: 'telephone_number',
     },
-    driving_liscence: {
+    drivingLiscence: {
       type: 'varchar',
       length: 255,
+      name: 'driving_liscence',
     },
-    spouse_name: {
+    spouseName: {
       type: 'varchar',
       length: 255,
+      name: 'spouse_name',
     },
     passport: {
       type: 'varchar',
       length: 255,
+      name: 'passport',
     },
-    start_title: {
+    startTitle: {
       type: 'varchar',
       length: 255,
+      name: 'start_title',
     },
-    end_title: {
+    endTitle: {
       type: 'varchar',
       length: 255,
+      name: 'end_title',
     },
-    birth_certificate_number: {
+    birthCertificateNumber: {
       type: 'varchar',
       length: 255,
+      name: 'birth_certificate_number',
     },
-    emergency_phone_number: {
+    emergencyPhoneNumber: {
       type: 'varchar',
       length: 255,
+      name: 'emergency_phone_number',
     },
-    home_district: {
+    homeDistrict: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'home_district',
     },
-    full_name: {
+    fullName: {
       type: 'varchar',
       length: 255,
+      name: 'full_name',
     },
     password: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'password',
     },
-    password_changed: {
+    passwordChanged: {
       type: 'enum',
       enum: ['yes', 'no'],
       default: 'no',
       nullable: true,
+      name: 'password_changed',
     },
-    tin_number: {
+    tinNumber: {
       type: 'varchar',
       length: 255,
+      name: 'tin_number',
     },
-    emergency_contact_name: {
+    emergencyContactName: {
       type: 'varchar',
       length: 255,
+      name: 'emergency_contact_name',
     },
-    emergency_contact_relation: {
+    emergencyContactRelation: {
       type: 'varchar',
       length: 255,
+      name: 'emergency_contact_relation',
     },
-    spouse_profession: {
+    spouseProfession: {
       type: 'varchar',
       length: 255,
+      name: 'spouse_profession',
     },
-    spouse_dob: {
+    spouseDob: {
       type: 'varchar',
       length: 255,
+      name: 'spouse_dob',
     },
     marraigeDate: {
       type: 'varchar',
       length: 255,
+      name: 'marraigeDate',
     },
-    spouse_blood_group: {
+    spouseBloodGroup: {
       type: 'varchar',
       length: 10,
+      name: 'spouse_blood_group',
     },
-    tin_certificate: {
+    tinCertificate: {
       type: 'varchar',
       length: 255,
+      name: 'tin_certificate',
     },
-    tax_circle: {
-      type: 'varchar',
-      length: 255,
-      nullable: true,
-    },
-    tax_zone: {
+    taxCircle: {
       type: 'varchar',
       length: 255,
       nullable: true,
+      name: 'tax_circle',
     },
-    id_hr_tax_area_type: {
+    taxZone: {
+      type: 'varchar',
+      length: 255,
+      nullable: true,
+      name: 'tax_zone',
+    },
+    idHrTaxAreaType: {
       type: 'int',
       nullable: true,
+      name: 'id_hr_tax_area_type',
     },
-    id_hris_talent_acquisition_joining_details: {
+    idHrisTalentAcquisitionJoiningDetails: {
       type: 'int',
       nullable: true,
+      name: 'id_hris_talent_acquisition_joining_details',
     },
-    id_interview_appraised_candidate: {
+    idInterviewAppraisedCandidate: {
       type: 'int',
       nullable: true,
+      name: 'id_interview_appraised_candidate',
     },
-    id_hr_employee_insert_file_import: {
+    idHrEmployeeInsertFileImport: {
       type: 'int',
       nullable: true,
+      name: 'id_hr_employee_insert_file_import',
     },
-    id_country_details: {
+    idCountryDetails: {
       type: 'int',
       nullable: true,
+      name: 'id_country_details',
     },
-    avatar_original_name: {
+    avatarOriginalName: {
       type: 'text',
       nullable: true,
+      name: 'avatar_original_name',
     },
-    tin_original_name: {
+    tinOriginalName: {
       type: 'text',
       nullable: true,
+      name: 'tin_original_name',
     },
     remarks: {
       type: 'text',
       nullable: true,
+      name: 'remarks',
     },
-    id_hris_job_requisition_summery: {
+    idHrisJobRequisitionSummery: {
       type: 'int',
       nullable: true,
+      name: 'id_hris_job_requisition_summery',
     },
-    id_hris_file_entry_details: {
+    idHrisFileEntryDetails: {
       type: 'int',
       nullable: true,
+      name: 'id_hris_file_entry_details',
     },
-    id_por_employee_car_ait: {
+    idPorEmployeeCarAit: {
       type: 'int',
       nullable: true,
+      name: 'id_por_employee_car_ait',
     },
-    id_por_employee_tin_info: {
+    idPorEmployeeTinInfo: {
       type: 'int',
       nullable: true,
+      name: 'id_por_employee_tin_info',
     },
   },
   relations: {
