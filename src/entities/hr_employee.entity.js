@@ -316,6 +316,15 @@ const HrEmployee = new EntitySchema({
       type: "one-to-one",
       target: 'HrOrganizationSetup',
       inverseSide: "hrEmployee"
+    },
+    taxAreaType: {
+      type: 'many-to-one',
+      target: 'HrTaxAreaType',
+      joinColumn: {
+        name: 'id_hr_tax_area_type',
+        referencedColumnName: 'idHrTaxAreaType'
+      },
+      inverseSide: 'hrEmployee'
     }
   }
 });
