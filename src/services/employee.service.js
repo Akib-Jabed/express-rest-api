@@ -45,6 +45,12 @@ export const informationService = async employeeId => {
       avatar: true,
       organizationSetup: { 
         offEmail: true,
+        offNumber: true,
+        workingStatus: true,
+        actualJoiningDate: true,
+        effectiveDate: true,
+        managementType: true,
+        offAccNum: true,
         designationMaster: {
           designationTitle: true
         },

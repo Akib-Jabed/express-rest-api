@@ -7,7 +7,7 @@ const HrEmployee = new EntitySchema({
     employeeId: {
       type: 'int',
       primary: true,
-      generated: 'increment',
+      generated: true,
       unsigned: true,
       name: 'employee_id',
     },
