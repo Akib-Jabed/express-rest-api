@@ -64,17 +64,13 @@ const HrShiftMaster = new EntitySchema({
       nullable: false
     }
   },
-//   relations: {
-//     user: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_users',
-//         referencedColumnName: 'idUsers'
-//       },
-//       inverseSide: 'shifts'
-//     }
-//   }
+  relations: {
+    organizationSetup: {
+      target: 'HrOrganizationSetup',
+      type: 'one-to-many',
+      inverseSide: 'shifts'
+    }
+  },
 });
 
 export default HrShiftMaster;

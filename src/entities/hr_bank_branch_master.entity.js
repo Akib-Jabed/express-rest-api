@@ -59,26 +59,13 @@ const HrBankBranchMaster = new EntitySchema({
       nullable: true
     }
   },
-//   relations: {
-//     user: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_users',
-//         referencedColumnName: 'idUsers'
-//       },
-//       inverseSide: 'bankBranches'
-//     },
-//     taxAreaType: {
-//       target: 'HrTaxAreaType',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_hr_tax_area_type',
-//         referencedColumnName: 'idHrTaxAreaType'
-//       },
-//       inverseSide: 'bankBranches'
-//     }
-//   }
+  relations: {
+    organizationSetup: {
+      target: 'HrOrganizationSetup',
+      type: 'one-to-many',
+      inverseSide: 'equivalentDesignations'
+    }
+  }
 });
 
 export default HrBankBranchMaster;

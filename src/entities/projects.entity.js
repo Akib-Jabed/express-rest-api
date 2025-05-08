@@ -142,30 +142,21 @@ const Projects = new EntitySchema({
       nullable: true
     }
   },
-//   relations: {
-//     company: {
-//       target: 'Companies',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_companies',
-//         referencedColumnName: 'idCompanies'
-//       }
-//     },
-//     parentProject: {
-//       target: 'Projects',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'parent_id',
-//         referencedColumnName: 'idProjects'
-//       },
-//       inverseSide: 'childProjects'
-//     },
-//     childProjects: {
-//       target: 'Projects',
-//       type: 'one-to-many',
-//       inverseSide: 'parentProject'
-//     }
-//   }
+  relations: {
+    company: {
+      type: 'many-to-one',
+      target: 'Companies',
+      joinColumn: {
+        name: 'id_companies',
+        referencedColumnName: 'idCompanies'
+      }
+    },
+    organizationSetup: {
+      type: "one-to-many",
+      target: "HrOrganizationSetup",
+      inverseSide: "projects"
+    }
+  }
 });
 
 export default Projects;

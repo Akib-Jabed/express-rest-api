@@ -324,7 +324,7 @@ const HrOrganizationSetup = new EntitySchema({
       }
     },
     designationMaster: {
-      type: "one-to-one",
+      type: "many-to-one",
       target: 'HrDesignationMaster',
       joinColumn: {
         name: "employee_desig_id",
@@ -333,14 +333,122 @@ const HrOrganizationSetup = new EntitySchema({
       inverseSide: "organizationSetup"
     },
     departments: {
-      type: "one-to-one",
+      type: "many-to-one",
       target: 'HrDepartments',
       joinColumn: {
         name: "id_department",
         referencedColumnName: 'idDepartment'
       },
       inverseSide: "organizationSetup"
-    }
+    },
+    projects: {
+      type: "many-to-one",
+      target: "Projects",
+      joinColumn: {
+        name: "id_business_unit",
+        referencedColumnName: "idProjects"
+      },
+      inverseSide: "organizationSetup"
+    },
+    equivalentDesignations: {
+      type: "many-to-one",
+      target: 'HrEquivalentDesignation',
+      joinColumn: {
+        name: "equivalent_designation_id",
+        referencedColumnName: 'equivalentDesignationId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    banks: {
+      type: "many-to-one",
+      target: 'Banks',
+      joinColumn: {
+        name: "bank_id",
+        referencedColumnName: 'idBanks'
+      },
+      inverseSide: "organizationSetup"
+    },
+    branches: {
+      type: "many-to-one",
+      target: 'HrBankBranchMaster',
+      joinColumn: {
+        name: "branch_id",
+        referencedColumnName: 'branchId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    grades: {
+      type: "many-to-one",
+      target: 'HrGrades',
+      joinColumn: {
+        name: "id_grade",
+        referencedColumnName: 'idGrade'
+      },
+      inverseSide: "organizationSetup"
+    },
+    shifts: {
+      type: "many-to-one",
+      target: 'HrShiftMaster',
+      joinColumn: {
+        name: "shift_id",
+        referencedColumnName: 'shiftId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    natureTypes: {
+      type: "many-to-one",
+      target: 'HrEmployeeNatureType',
+      joinColumn: {
+        name: "id_employee_nature_type",
+        referencedColumnName: 'idEmployeeNatureType'
+      },
+      inverseSide: "organizationSetup"
+    },
+    lineSupervisors: {
+      type: "many-to-one",
+      target: 'HrEmployee',
+      joinColumn: {
+        name: "line_supervisor_id",
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    reportSupervisors: {
+      type: "many-to-one",
+      target: 'HrEmployee',
+      joinColumn: {
+        name: "reporting_supervisor_id",
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    departmentHeads: {
+      type: "many-to-one",
+      target: 'HrEmployee',
+      joinColumn: {
+        name: "dept_head_id",
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    lineSupervisorDesignations: {
+      type: "many-to-one",
+      target: 'HrDesignationMaster',
+      joinColumn: {
+        name: "line_supervisor_desig_id",
+        referencedColumnName: 'designationId'
+      },
+      inverseSide: "organizationSetup"
+    },
+    reportSupervisorDesignations: {
+      type: "many-to-one",
+      target: 'HrDesignationMaster',
+      joinColumn: {
+        name: "reporting_supervisor_desig_id",
+        referencedColumnName: 'designationId'
+      },
+      inverseSide: "organizationSetup"
+    },
   }
 });
 

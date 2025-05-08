@@ -56,6 +56,45 @@ export const informationService = async employeeId => {
         },
         departments: {
           department: true
+        },
+        projects: {
+          projectName: true,
+          company: {
+            companyName: true,
+          }
+        },
+        equivalentDesignations: {
+          equivalentDesignationTitle: true
+        },
+        banks: {
+          bankName: true
+        },
+        branches: {
+          branchName: true
+        },
+        grades: {
+          gradeName: true
+        },
+        shifts: {
+          shiftName: true
+        },
+        natureTypes: {
+          typeName: true
+        },
+        lineSupervisors: {
+          fullName: true
+        },
+        reportSupervisors: {
+          fullName: true
+        },
+        departmentHeads: {
+          fullName: true
+        },
+        lineSupervisorDesignations: {
+          designationTitle: true
+        },
+        reportSupervisorDesignations: {
+          designationTitle: true
         }
       }
     },
@@ -70,7 +109,21 @@ export const informationService = async employeeId => {
     relations: { 
       organizationSetup: {
         designationMaster: true,
-        departments: true
+        departments: true,
+        projects: {
+          company: true
+        },
+        equivalentDesignations: true,
+        banks: true,
+        branches: true,
+        grades: true,
+        shifts: true,
+        natureTypes: true,
+        lineSupervisors: true,
+        reportSupervisors: true,
+        departmentHeads: true,
+        lineSupervisorDesignations: true,
+        reportSupervisorDesignations: true
       },
       taxAreaType: true
     }
@@ -112,9 +165,28 @@ export const informationService = async employeeId => {
       passport: information.passport
     },
     organization: {
-      offEmail: information.organizationSetup.offEmail,
-      designationTitle: information.organizationSetup.designationMaster.designationTitle,
-      department: information.organizationSetup.departments.department
+      company: information.organizationSetup.projects.company.companyName,
+      businessUnit: information.organizationSetup.projects.projectName,
+      department: information.organizationSetup.departments.department,
+      designation: information.organizationSetup.designationMaster.designationTitle,
+      equivalentDesignation: information.organizationSetup.equivalentDesignations.equivalentDesignationTitle,
+      officialPhone: information.organizationSetup.offNumber,
+      officialEmail: information.organizationSetup.offEmail,
+      bank: information.organizationSetup.banks.bankName,
+      branch: information.organizationSetup.branches.branchName,
+      officialAccountNumber: information.organizationSetup.offAccNum,
+      workingStatus: information.organizationSetup.workingStatus,
+      grade: information.organizationSetup.grades?.gradeName || 'N/A',
+      shift: information.organizationSetup.shifts.shiftName,
+      joiningDate: information.organizationSetup.actualJoiningDate,
+      effectiveDate: information.organizationSetup.effectiveDate,
+      managementType: information.organizationSetup.managementType,
+      natureType: information.organizationSetup.natureTypes.typeName,
+      lineSupervisor: information.organizationSetup.lineSupervisors.fullName,
+      lineSupervisorDesignation: information.organizationSetup.lineSupervisorDesignations.designationTitle,
+      reportSupervisor: information.organizationSetup.reportSupervisors.fullName,
+      reportSupervisorDesignation: information.organizationSetup.reportSupervisorDesignations.designationTitle,
+      departmentHead: information.organizationSetup.departmentHeads.fullName
     }
   }
   

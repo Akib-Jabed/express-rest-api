@@ -52,17 +52,13 @@ const HrEquivalentDesignation = new EntitySchema({
       nullable: false
     }
   },
-//   relations: {
-//     user: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_users',
-//         referencedColumnName: 'idUsers'
-//       },
-//       inverseSide: 'equivalentDesignations'
-//     }
-//   }
+  relations: {
+    organizationSetup: {
+      target: 'HrOrganizationSetup',
+      type: 'one-to-many',
+      inverseSide: 'equivalentDesignations'
+    }
+  }
 });
 
 export default HrEquivalentDesignation;

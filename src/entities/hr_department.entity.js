@@ -46,7 +46,7 @@ const HrDepartments = new EntitySchema({
     },
     relations: {
         organizationSetup: {
-            type: 'one-to-one',
+            type: 'one-to-many',
             target: 'HrOrganizationSetup',
             inverseSide: 'departments'
         }

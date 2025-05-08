@@ -155,21 +155,13 @@ const Companies = new EntitySchema({
       onUpdate: 'CURRENT_TIMESTAMP'
     }
   },
-//   relations: {
-//     city: {
-//       target: 'City',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_city',
-//         referencedColumnName: 'idCity'
-//       }
-//     },
-//     projects: {
-//       target: 'Projects',
-//       type: 'one-to-many',
-//       inverseSide: 'company'
-//     }
-//   }
+  relations: {
+    projects: {
+      target: 'Projects',
+      type: 'one-to-many',
+      inverseSide: 'company'
+    }
+  }
 });
 
 export default Companies;

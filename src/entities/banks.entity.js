@@ -47,6 +47,13 @@ const Banks = new EntitySchema({
       default: () => 'CURRENT_TIMESTAMP',
       onUpdate: 'CURRENT_TIMESTAMP',
     }
+  },
+  relations: {
+    organizationSetup: {
+      target: 'HrOrganizationSetup',
+      type: 'one-to-many',
+      inverseSide: 'equivalentDesignations'
+    }
   }
 });
 
