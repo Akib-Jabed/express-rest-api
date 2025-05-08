@@ -88,48 +88,26 @@ const HrPayStructureSetup = new EntitySchema({
       nullable: true
     }
   },
-//   relations: {
-//     employee: {
-//       target: 'HrEmployee',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'employee_id',
-//         referencedColumnName: 'employeeId'
-//       }
-//     },
-//     fiscalYear: {
-//       target: 'AccFiscalYear',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_fiscal_year',
-//         referencedColumnName: 'idFiscalYear'
-//       }
-//     },
-//     payStructureTemplateDetails: {
-//       target: 'HrPayStructureTemplateDetails',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'pay_structure_template_details_id',
-//         referencedColumnName: 'payStructureTemplateDetailsId'
-//       }
-//     },
-//     user: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_users',
-//         referencedColumnName: 'idUsers'
-//       }
-//     },
-//     payStructureSetupFileImport: {
-//       target: 'HrPayStructureSetupFileImport',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_hr_pay_structure_setup_file_import',
-//         referencedColumnName: 'idHrPayStructureSetupFileImport'
-//       }
-//     }
-//   }
+  relations: {
+    hrEmployee: {
+      target: 'HrEmployee',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'employee_id',
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: 'payStructureSetup'
+    },
+    payStructureTemplateDetails: {
+      target: 'HrPayStructureTemplateDetails',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'pay_structure_template_details_id',
+        referencedColumnName: 'payStructureTemplateDetailsId'
+      },
+      inverseSide: 'payStructureSetup'
+    }
+  }
 });
 
 export default HrPayStructureSetup;

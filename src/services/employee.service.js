@@ -3,10 +3,13 @@ import { In } from 'typeorm';
 import AppDataSource from '../config/database.config.js';
 import HrEmployee from '../entities/hr_employee.entity.js';
 import { createFlattenOject } from '../helpers/formatter.js';
+import { getEmployeeCurrentSalary, getDeductionHeads, getEarningHeads } from '../helpers/query.js';
 
 const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
 
 export const informationService = async employeeId => {
+  const currentSalaryRecord = await getEmployeeCurrentSalary(employeeId);
+  
   const information = await hrEmployeeRepo.findOne({
     select: {
       employeeId: true, 
@@ -96,6 +99,15 @@ export const informationService = async employeeId => {
         reportSupervisorDesignations: {
           designationTitle: true
         }
+      },
+      payStructureSetup: {
+        payStructureSetupId: true,
+        headsAmount: true,
+        payStructureTemplateDetails: {
+          payStructureTemplateDetailsId: true,
+          headType: true,
+          earningDeductionHeadsId: true,
+        }
       }
     },
     where: {
@@ -104,6 +116,10 @@ export const informationService = async employeeId => {
       organizationSetup: {
         publicationStatus: 'activated',
         workingStatus: In(['Working', 'JV'])
+      },
+      payStructureSetup: {
+        publicationStatus: 'activated',
+        payStructureSetupRecordsId: currentSalaryRecord?.payStructureSetupRecordsId
       }
     },
     relations: { 
@@ -125,10 +141,28 @@ export const informationService = async employeeId => {
         lineSupervisorDesignations: true,
         reportSupervisorDesignations: true
       },
-      taxAreaType: true
+      taxAreaType: true,
+      payStructureSetup: {
+        payStructureTemplateDetails: true
+      }
     }
   });
+  
+  if (information?.payStructureSetup) {
+    const earningHeads = await getEarningHeads();
+    const deductionHeads = await getDeductionHeads();
 
+    information.payStructureSetup = information.payStructureSetup.map(setup => {
+      const {headType, earningDeductionHeadsId} = setup.payStructureTemplateDetails;
+      const head = headType === 'earning' ? earningHeads[earningDeductionHeadsId] : deductionHeads[earningDeductionHeadsId];
+      return {
+        headType: setup.payStructureTemplateDetails.headType,
+        headName: head.headName,
+        headAmount: setup.headsAmount,
+      };
+    });
+  }
+  
   const obj = {
     personal: {
       employeeId: information.employeeId,
@@ -187,7 +221,8 @@ export const informationService = async employeeId => {
       reportSupervisor: information.organizationSetup.reportSupervisors.fullName,
       reportSupervisorDesignation: information.organizationSetup.reportSupervisorDesignations.designationTitle,
       departmentHead: information.organizationSetup.departmentHeads.fullName
-    }
+    },
+    payStructure: information.payStructureSetup
   }
   
   const flattenObj = createFlattenOject(information);

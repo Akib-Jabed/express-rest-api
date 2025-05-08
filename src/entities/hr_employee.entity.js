@@ -325,6 +325,16 @@ const HrEmployee = new EntitySchema({
         referencedColumnName: 'idHrTaxAreaType'
       },
       inverseSide: 'hrEmployee'
+    },
+    employeeSalaryInfo: {
+      type: 'one-to-many',
+      target: 'HrEmployeeSalaryInfo',
+      inverseSide: 'hrEmployee'
+    },
+    payStructureSetup: {
+      type: 'one-to-many',
+      target: 'HrPayStructureSetup',
+      inverseSide: 'hrEmployee'
     }
   }
 });

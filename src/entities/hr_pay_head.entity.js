@@ -1,26 +1,26 @@
 import { EntitySchema } from 'typeorm';
 
-const HrEarningHeads = new EntitySchema({
-  name: 'HrEarningHeads',
-  tableName: 'hr_earning_heads',
+const HrPayHead = new EntitySchema({
+  name: 'HrPayHead',
+  tableName: 'hr_pay_heads',
   columns: {
-    earningHeadsId: {
-      name: 'earning_heads_id',
+    headId: {
+      name: 'head_id',
       primary: true,
       type: 'int',
       generated: true,
       unsigned: true
     },
-    earningHeadsName: {
-      name: 'earning_heads_name',
+    headName: {
+      name: 'head_name',
       type: 'varchar',
-      length: 200,
+      length: 150,
       nullable: false
     },
-    earningHeadsType: {
-      name: 'earning_heads_type',
-      type: 'enum',
-      enum: ['Fixed', 'Variable'],
+    headType: {
+      name: 'head_type',
+      type: 'varchar',
+      length: 150,
       nullable: false
     },
     publicationStatus: {
@@ -46,21 +46,15 @@ const HrEarningHeads = new EntitySchema({
       type: 'int',
       unsigned: true,
       nullable: false
-    },
-    isSystem: {
-      name: 'is_system',
-      type: 'enum',
-      enum: ['yes', 'no'],
-      default: 'no',
-      nullable: true
-    },
-    partOfGross: {
-      name: 'part_of_gross',
-      type: 'enum',
-      enum: ['yes', 'no', 'bonus'],
-      nullable: true
     }
   },
+  relations: {
+    payStructureTemplateDetails: {
+      target: 'HrPayStructureTemplateDetails',
+      type: 'one-to-many',
+      inverseSide: 'headDetails'
+    }
+  }
 });
 
-export default HrEarningHeads;
+export default HrPayHead; 
