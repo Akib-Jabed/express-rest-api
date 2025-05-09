@@ -8,8 +8,6 @@ import ApiError from '../utils/ApiError.js';
 import { generateToken, hashPassword, verifyPassword } from '../utils/auth.js';
 
 export const registerService = async ({username, password}) => {
-  const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
-  
   const employee = await isActiveEmployee(username);
   
   if (!employee) {

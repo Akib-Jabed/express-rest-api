@@ -60,40 +60,34 @@ const PorEmployeeHrDetails = new EntitySchema({
       nullable: true
     }
   },
-//   relations: {
-//     hrEmployee: {
-//       target: 'HrEmployee',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'hr_id',
-//         referencedColumnName: 'employeeId'
-//       }
-//     },
-//     employeeHr: {
-//       target: 'PorEmployeeHr',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_employee_hr',
-//         referencedColumnName: 'idEmployeeHr'
-//       }
-//     },
-//     deletedByUser: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'deleted_by',
-//         referencedColumnName: 'idUsers'
-//       }
-//     },
-//     user: {
-//       target: 'User',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_users',
-//         referencedColumnName: 'idUsers'
-//       }
-//     }
-//   }
+  relations: {
+    hrEmployee: {
+      target: 'HrEmployee',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'hr_id',
+        referencedColumnName: 'employeeId'
+      }
+    },
+    employeeHrRecords: {
+      target: 'PorEmployeeHr',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'id_employee_hr',
+        referencedColumnName: 'idEmployeeHr'
+      },
+      inverseSide: 'employeeHrDetails'
+    },
+    hrEmployee: {
+      target: 'HrEmployee',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'hr_id',
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: 'employeeHrDetails'
+    }
+  }
 });
 
 export default PorEmployeeHrDetails;

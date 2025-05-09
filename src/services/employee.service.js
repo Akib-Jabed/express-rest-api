@@ -108,6 +108,17 @@ export const informationService = async employeeId => {
           headType: true,
           earningDeductionHeadsId: true,
         }
+      },
+      employeeHrRecords: {
+        idEmployeeHr: true,
+        employeeHrDetails: {
+          idEmployeeHrDetails: true,
+          type: true,
+          hrEmployee: {
+            fullName: true,
+            employeeCustomId: true
+          }
+        }
       }
     },
     where: {
@@ -120,6 +131,12 @@ export const informationService = async employeeId => {
       payStructureSetup: {
         publicationStatus: 'activated',
         payStructureSetupRecordsId: currentSalaryRecord?.payStructureSetupRecordsId
+      },
+      employeeHrRecords: {
+        employeeHrDetails: {
+          status: 'Approved',
+          publicationStatus: 'activated'
+        }
       }
     },
     relations: { 
@@ -144,10 +161,15 @@ export const informationService = async employeeId => {
       taxAreaType: true,
       payStructureSetup: {
         payStructureTemplateDetails: true
+      },
+      employeeHrRecords: {
+        employeeHrDetails: {
+          hrEmployee: true
+        }
       }
     }
   });
-  
+
   if (information?.payStructureSetup) {
     const earningHeads = await getEarningHeads();
     const deductionHeads = await getDeductionHeads();
@@ -161,6 +183,14 @@ export const informationService = async employeeId => {
         headAmount: setup.headsAmount,
       };
     });
+  }
+
+  if (information?.employeeHrRecords) {
+    information.employeeHrRecords = information.employeeHrRecords?.employeeHrDetails?.map(record => ({
+      hrId: record.hrEmployee.employeeCustomId,
+      name: record.hrEmployee.fullName,
+      type: record.type,
+    }));
   }
   
   const obj = {
@@ -222,7 +252,8 @@ export const informationService = async employeeId => {
       reportSupervisorDesignation: information.organizationSetup.reportSupervisorDesignations.designationTitle,
       departmentHead: information.organizationSetup.departmentHeads.fullName
     },
-    payStructure: information.payStructureSetup
+    payStructure: information.payStructureSetup,
+    hrs: information.employeeHrRecords
   }
   
   const flattenObj = createFlattenOject(information);

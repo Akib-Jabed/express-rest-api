@@ -335,6 +335,16 @@ const HrEmployee = new EntitySchema({
       type: 'one-to-many',
       target: 'HrPayStructureSetup',
       inverseSide: 'hrEmployee'
+    },
+    employeeHrRecords: {
+      type: 'one-to-one',
+      target: 'PorEmployeeHr',
+      inverseSide: 'hrEmployee'
+    },
+    employeeHrDetails: {
+      type: 'one-to-many',
+      target: 'PorEmployeeHrDetails',
+      inverseSide: 'hrEmployee'
     }
   }
 });

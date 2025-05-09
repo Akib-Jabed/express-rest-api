@@ -27,17 +27,22 @@ const PorEmployeeHr = new EntitySchema({
       onUpdate: 'CURRENT_TIMESTAMP',
     }
   },
-//   relations: {
-//     employee: {
-//       target: 'HrEmployee', // Assuming the related entity is named HrEmployee
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'employee_id',
-//         referencedColumnName: 'employee_id'
-//       },
-//       inverseSide: 'employeeHrRecords' // Optional: if you want bidirectional relation
-//     }
-//   }
+  relations: {
+    hrEmployee: {
+      target: 'HrEmployee',
+      type: 'one-to-one',
+      joinColumn: {
+        name: 'employee_id',
+        referencedColumnName: 'employeeId'
+      },
+      inverseSide: 'employeeHrRecords'
+    },
+    employeeHrDetails: {
+      target: 'PorEmployeeHrDetails',
+      type: 'one-to-many',
+      inverseSide: 'employeeHrRecords'
+    }
+  }
 });
 
 export default PorEmployeeHr;

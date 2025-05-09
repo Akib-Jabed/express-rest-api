@@ -20,3 +20,11 @@ export const loginSchema = {
         password: Joi.string().required()
     })
 }
+
+export const passwordUpdateSchema = {
+    body: Joi.object({
+        currentPassword: Joi.string().required(),
+        newPassword: Joi.string().min(6).required().disallow(Joi.ref('currentPassword')).messages({ 'any.invalid': 'New password cannot be the same as the current password' }),
+        confirmPassword: Joi.string().valid(Joi.ref('newPassword')).required().messages({ 'any.only': 'Confirm password must match new password' })
+    })
+}
