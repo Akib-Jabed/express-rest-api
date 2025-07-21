@@ -27,6 +27,11 @@ export const informationService = async employeeId => {
       gender: true,
       dob: true,
       maritalStatus: true,
+      marraigeDate: true,
+      spouseName: true,
+      spouseDob: true,
+      spouseProfession: true,
+      spouseBloodGroup: true,
       fatherName: true,
       motherName: true,
       homeDistrict: true,
@@ -169,11 +174,11 @@ export const informationService = async employeeId => {
       }
     }
   });
-
+  
   if (information?.payStructureSetup) {
     const earningHeads = await getEarningHeads();
     const deductionHeads = await getDeductionHeads();
-
+    
     information.payStructureSetup = information.payStructureSetup.map(setup => {
       const {headType, earningDeductionHeadsId} = setup.payStructureTemplateDetails;
       const head = headType === 'earning' ? earningHeads[earningDeductionHeadsId] : deductionHeads[earningDeductionHeadsId];
@@ -184,7 +189,7 @@ export const informationService = async employeeId => {
       };
     });
   }
-
+  
   if (information?.employeeHrRecords) {
     information.employeeHrRecords = information.employeeHrRecords?.employeeHrDetails?.map(record => ({
       hrId: record.hrEmployee.employeeCustomId,
@@ -211,6 +216,11 @@ export const informationService = async employeeId => {
       gender: information.gender,
       dob: information.dob,
       maritalStatus: information.maritalStatus,
+      marraigeDate: information.marraigeDate,
+      spouseName: information.spouseName,
+      spouseDob: information.spouseDob,
+      spouseProfession: information.spouseProfession,
+      spouseBloodGroup: information.spouseBloodGroup,
       fatherName: information.fatherName,
       motherName: information.motherName,
       homeDistrict: information.homeDistrict,
@@ -259,4 +269,22 @@ export const informationService = async employeeId => {
   const flattenObj = createFlattenOject(information);
   
   return { obj, flattenObj };
+}
+
+export const avatarUploadService = async req => {
+  const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
+  const employee = await hrEmployeeRepo.findOne({
+    select: {
+      avatar: true,
+      avatarOriginalName: true
+    },
+    where: {
+      employeeId: req.employeeId,
+      publicationStatus: 'activated',
+    }
+  });
+  
+  employee.avatar = req.fileName
+  employee.avatarOriginalName = req.originalName
+  await hrEmployeeRepo.save(employee);
 }

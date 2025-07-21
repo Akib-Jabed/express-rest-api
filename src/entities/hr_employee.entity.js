@@ -345,6 +345,11 @@ const HrEmployee = new EntitySchema({
       type: 'one-to-many',
       target: 'PorEmployeeHrDetails',
       inverseSide: 'hrEmployee'
+    },
+    certificateRequest: {
+      target: 'PorCertificateRequest',
+      type: 'one-to-many',
+      inverseSide: 'hrEmployee'
     }
   }
 });

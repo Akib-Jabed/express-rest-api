@@ -43,7 +43,7 @@ export const isActiveEmployee = async (username) => {
   return employee;
 }
 
-export const getEmployeeCurrentSalary = async (employeeId) => {
+export const getLastSalaryRecordId = async (employeeId) => {
   const currentDate = new Date();
   const yearMonth = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
   
@@ -60,6 +60,12 @@ export const getEmployeeCurrentSalary = async (employeeId) => {
       yearMonth: 'DESC'
     }
   });
+
+  return latestSalaryRecord;
+}
+
+export const getEmployeeCurrentSalary = async (employeeId) => {
+  const latestSalaryRecord = await getLastSalaryRecordId(employeeId);
 
   if (latestSalaryRecord) {
     const salaryDetails = await hrEmployeeSalaryInfoRepo.findOne({
@@ -120,3 +126,4 @@ export const getDeductionHeads = async () => {
     return acc;
   }, {});
 }
+

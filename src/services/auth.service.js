@@ -40,11 +40,35 @@ export const loginService = async ({username, password}) => {
   if (employee.organizationSetup.portal_access === 'No') {
     throw new ApiError(StatusCodes.FORBIDDEN, "Employee don't have portal access");
   }
-
+  
   if (await verifyPassword(password, employee.password)) {
     const token = generateToken({employeeId: employee.employee_id});
     return token;
   }
-
+  
   throw new ApiError(StatusCodes.UNAUTHORIZED, 'Invalid credentials');
+}
+
+export const passwordUpdateService = async (employeeId, currentPassword, newPassword) => {
+  const hrEmployeeRepo = AppDataSource.getRepository(HrEmployee);
+  const employee = await hrEmployeeRepo.findOne({
+    select: {
+      employeeId: true,
+      password: true
+    },
+    where: {
+      employeeId: employeeId,
+      publicationStatus: 'activated',
+    }
+  });
+  
+  if (await verifyPassword(currentPassword, employee.password)) {
+    employee.password = await hashPassword(newPassword);
+    await hrEmployeeRepo.save(employee);
+    
+    const token = generateToken({employeeId: employee.employeeId});
+    return token;
+  }
+  
+  throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid current password');
 }

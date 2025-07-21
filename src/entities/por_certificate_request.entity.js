@@ -135,23 +135,16 @@ const PorCertificateRequest = new EntitySchema({
       nullable: false
     }
   },
-//   relations: {
-//     requestedByEmployee: {
-//       target: 'HrEmployee',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'requested_by',
-//         referencedColumnName: 'employeeId'
-//       }
-//     },
-//     certificateMaster: {
-//       target: 'PorCertificateMaster',
-//       type: 'many-to-one',
-//       joinColumn: {
-//         name: 'id_por_certificate_master',
-//         referencedColumnName: 'idPorCertificateMaster'
-//       }
-//     },
+  relations: {
+    hrEmployee: {
+      target: 'HrEmployee',
+      type: 'many-to-one',
+      joinColumn: {
+        name: 'requested_by',
+        referencedColumnName: 'employeeId'
+      },
+      inverseSde: 'certificateRequest'
+    },
 //     actionTakenByEmployee: {
 //       target: 'HrEmployee',
 //       type: 'many-to-one',
@@ -168,7 +161,7 @@ const PorCertificateRequest = new EntitySchema({
 //         referencedColumnName: 'employeeId'
 //       }
 //     }
-//   }
+  }
 });
 
 export default PorCertificateRequest;

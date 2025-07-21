@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-import { informationService } from '../services/employee.service.js';
+import { avatarUploadService, informationService } from '../services/employee.service.js';
 import catchAsync from '../utils/catchAsync.js';
 
 
@@ -22,3 +22,9 @@ export const employeeInformationController = catchAsync(async (req, res) => {
 
     res.status(StatusCodes.OK).send({success: true, data: responseData});
 }); 
+
+export const employeeAvatarUploadController = catchAsync(async (req, res) => {
+    await avatarUploadService(req);
+    
+    res.status(StatusCodes.OK).send({success: true, message: 'Employee avatar uploaded successfully!'});
+})

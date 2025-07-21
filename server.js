@@ -1,36 +1,38 @@
-import gracefulShutdown from 'http-graceful-shutdown';
+// import gracefulShutdown from 'http-graceful-shutdown';
 
 import createApp from './src/app.js';
-import AppDataSource from './src/config/database.config.js';
-import environments from './src/config/environment.config.js';
-import logger from './src/config/logger.config.js';
+// import AppDataSource from './src/config/database.config.js';
+// import environments from './src/config/environment.config.js';
+// import logger from './src/config/logger.config.js';
 
 
 const app = createApp();
 
-async function startApp() {
-    try {
-        await AppDataSource.initialize()
-        logger.info('✅ Data source has been initialized!');
-        
-        const server = app.listen(environments.port, () => logger.info(`🚀 Server running at port: ${environments.port}`));
+function startApp() {
+    //     try {
+    //         await AppDataSource.initialize()
+    //         logger.info('✅ Data source has been initialized!');
 
-        gracefulShutdown(server, {
-            development: false,
-            forceExit: true,
-            timeout: 60000,
-            onShutdown: async function() {
-                if (AppDataSource.isInitialized) {
-                logger.log('🔻 Shutting down DB...');
-                await AppDataSource.destroy()
-                }    
-            },
-            finally: () => logger.log('✅ Server gracefully shutted down...')
-        })    
-    } catch (err) {
-        logger.error(`❌ Data source initialization failed! ${err}`)
-        process.exit(1)
-    }
+    //         const server = app.listen(environments.port, () => logger.info(`🚀 Server running at port: ${environments.port}`));
+
+    //         gracefulShutdown(server, {
+    //             development: false,
+    //             forceExit: true,
+    //             timeout: 60000,
+    //             onShutdown: async function() {
+    //                 if (AppDataSource.isInitialized) {
+    //                 logger.log('🔻 Shutting down DB...');
+    //                 await AppDataSource.destroy()
+    //                 }    
+    //             },
+    //             finally: () => logger.log('✅ Server gracefully shutted down...')
+    //         })    
+    //     } catch (err) {
+    //         logger.error(`❌ Data source initialization failed! ${err}`)
+    //         process.exit(1)
+    //     }
 }
 
 startApp();
+
+console.log('Hello World')
